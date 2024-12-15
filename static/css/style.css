@@ -1,0 +1,250 @@
+:root {
+  --i: 0;
+  --darkColor: #056e72;
+  --normalColor: #258e92;
+  --lightColor: #45aeb2;
+  --toastColor: #09b62a;
+  --bodyColor: white;
+}
+
+body{
+  background-color: var(--bodyColor);
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.button-group{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+button{
+  color: #fff;
+  background-color: var(--normalColor);
+  border-color: var(--normalColor);
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  padding: .375rem .75rem;
+  margin: .5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+button:hover{
+  color: #fff;
+  background-color: var(--lightColor);
+  border-color: var(--lightColor);
+}
+
+button:active{
+  color: #fff;
+  background-color: var(--darkColor);
+  border-color: var(--darkColor);
+}
+
+div {
+  box-sizing: border-box;
+}
+
+.board {
+  display: grid;
+  grid-template-rows: repeat(6, 1fr); /* 6 rows */
+  grid-template-columns: repeat(7, 1fr); /* 7 columns */
+  grid-row-gap: 0.5rem;
+  width: min(80vw, 75vh);
+  height: min(80vw, 75vh);
+  margin: auto;
+  outline: 1px solid black;
+  background-color: var(--normalColor);
+}
+
+.board .field {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  width: 90%;
+  height: 90%;
+  margin: 5%;
+  background-color: var(--bodyColor);
+}
+
+.board .field .piece {
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  animation: fall 0.5s ease-out;
+}
+.board .field .blue {
+  background-color: blue;
+}
+.board .field .red {
+  background-color: red;
+}
+
+.board .field .piece.removed {
+  animation: remove 0.25s ease-out forwards;
+}
+
+.player{
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 50%;
+  padding: .5em;
+  color: var(--bodyColor);
+}
+
+.winScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  animation: fadeIn 1s;
+}
+
+.winScreen .message {
+  position: fixed;
+  top: 20px;
+  margin: auto auto;
+  color: #ffffff;
+  text-align: center;
+  width: 100%;
+  z-index: 1001;
+}
+
+.toast {
+  position: fixed;
+  padding: 10px;
+  left: 50%;
+  border-radius: 5px;
+  width: fit-content;
+  height: fit-content;
+  background-color: var(--toastColor);
+  color: #ffffff;
+  top: -10000px;
+  transform: translateX(-50%);
+  animation-name: popup;
+  animation-duration: 4s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+@media screen and (min-width: 1024px) {
+
+}
+
+/**
+  Confetti
+*/
+
+.confetti-container {
+  width: 100%;
+  height: 100%;
+}
+
+.confetti {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -10px;
+  width: 10px;
+  height: 10px;
+  background-color: #f4b400;
+  animation: celebrate 3s linear infinite;
+  animation-delay: calc(var(--i) * 0.1s); /* Stagger animation */
+}
+
+/* Different colors */
+.confetti-piece:nth-child(2n) {
+  background-color: #0f9d58;
+}
+.confetti-piece:nth-child(3n) {
+  background-color: #db4437;
+}
+.confetti-piece:nth-child(5n) {
+  background-color: #4285f4;
+}
+
+/**
+Animations
+*/
+
+@keyframes fadein {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
+
+@keyframes celebrate {
+  0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 1;
+  }
+  100% {
+      transform: translateY(100vh) rotate(720deg);
+      opacity: 0;
+  }
+}
+
+@keyframes popup {
+  0% {
+      top: -100px;
+      background-color: white;
+  }
+  25% {
+      top: 50px;
+      background-color: var(--toastColor);
+  }
+  50% {
+  }
+  75% {
+      top: 50px;
+      background-color: var(--toastColor);
+  }
+  100% {
+      top: -100px;
+      background-color: white;
+  }
+}
+
+@keyframes fall {
+  from {
+      transform: translateY(-100vh); /* Start from above the viewport */
+  }
+  to {
+      transform: translateY(0); /* End at its final position */
+  }
+}
+
+@keyframes remove {
+  from {
+      transform: scale(1);
+      opacity: 1;
+  }
+  to {
+      transform: scale(0);
+      opacity: 0;
+  }
+}
